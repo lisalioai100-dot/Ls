@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Observers\LessonObserver;
 use App\Models\Lesson;
-
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +23,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Lesson::observe(LessonObserver::class);
+
+   
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        }
     }
 }
