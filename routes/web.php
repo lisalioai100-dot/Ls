@@ -3,20 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Puble;
-use Illuminate\Support\Facades\Artisan;
 
-Route::get('/run-migration-su', function () {
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        return 'Done: ' . Artisan::output();
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-})->withoutMiddleware([
-    \Illuminate\Session\Middleware\StartSession::class,
-    \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    \App\Http\Middleware\VerifyCsrfToken::class
-]);
 
 #======================================main===================================================#
 Route::get('/',[Puble::class,'index'])->name('index');

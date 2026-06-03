@@ -9,8 +9,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql gd
 
@@ -27,10 +25,6 @@ COPY . .
 
 
 RUN composer install --no-dev --optimize-autoloader
-
-
-RUN npm install
-RUN npm run build
 
 RUN chown -R www-data:www-data /var/www/html/storage \
     /var/www/html/bootstrap/cache \
