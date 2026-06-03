@@ -27,3 +27,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 80
+
+RUN chown -R www-data:www-data /var/www/html/database
+
+CMD php artisan migrate --force && apache2-foreground
