@@ -73,7 +73,7 @@ class Puble extends Controller
 
     public function info()
     {
-        $info = Info::first()->paginate(5);
+        $info = Info::all();
         return view('student.info', compact('info'));
     }
 }
