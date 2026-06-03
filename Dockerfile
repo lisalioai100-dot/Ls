@@ -39,4 +39,4 @@ RUN chown -R www-data:www-data /var/www/html/storage \
 
 EXPOSE 80
 
-CMD php artisan config:clear && php artisan view:clear && php artisan migrate --force && apache2-foreground
+CMD php artisan config:clear && php artisan view:clear && php artisan storage:link && php artisan migrate --force && apache2-foreground
