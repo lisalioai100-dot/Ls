@@ -3,6 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Puble;
+use Illuminate\Support\Facades\Artisan;
+
+
+
+Route::get('/run-migration-su', function () {
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        return 'Jabaaaal! Migrations executed successfully: <br><pre>' . Artisan::output() . '</pre>';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
 
 #======================================main===================================================#
 Route::get('/',[Puble::class,'index'])->name('index');
