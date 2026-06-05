@@ -59,7 +59,7 @@
                 <div class="lesson-card w-full sm:w-[420px] rounded-2xl p-4 flex flex-col gap-4">
                     
                     <div class="relative overflow-hidden rounded-xl bg-black/50 aspect-video border border-purple-950/40 shadow-inner">
-    
+                        <img src="{{ asset('storage/'.$l->image) }}" alt="{{ $l->name }}" class="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105">
                     </div>
 
                     <div class="flex items-start space-x-3 mt-1 px-1">
