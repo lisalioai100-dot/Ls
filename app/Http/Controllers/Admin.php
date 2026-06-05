@@ -50,8 +50,7 @@ class Admin extends Controller
     public function setLesson(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required','string' ,'min:5','max:45'],
-            'video' => ['required', 'file', 'mimes:mp4,ogg,mov,webm', 'max:51200'],
+            'name' => ['required','string' ,'min:5','max:600'],
             'image' => ['required','image','mimes:jpg,png,jpeg,gif','max:2048'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
         ]);
@@ -61,11 +60,9 @@ class Admin extends Controller
         try{
 
             $imagePath = $request->file('image')->store('image','public');
-            $videoPath = $request->file('video')->store('image','public');
             $lesson = Lesson:: create([
                 'name' => $validated['name'],
                 'image' => $imagePath,
-                'video' => $videoPath,
                 'category_id' => $validated['category_id'],
             ]);
             DB::commit();
@@ -77,10 +74,7 @@ class Admin extends Controller
                 {
                     Storage::disk('public')->delete($imagePath);
                 }
-            if(isset($videoPath))
-                {
-                    Storage::disk('public')->delete($videoPath);
-                }
+        
 
                     DB::rollback();
                     logger()->error('Error : '.$e->getMessage());

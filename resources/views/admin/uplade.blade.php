@@ -574,7 +574,6 @@ body::before {
                             @csrf
                             <input name="name" type="text" placeholder="Set the name of product" required>
                             <input name="image" type="file" placeholder="Set the poster of lesson" required>
-                            <input name="video" type="file" required placeholder="Set the video of lesson">
                             <input name="category_id" type="number" placeholder="Set the number of category" required>
                             <button type="submit">Set Product</button>
                         </form>

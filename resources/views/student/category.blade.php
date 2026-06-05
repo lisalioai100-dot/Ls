@@ -59,14 +59,7 @@
                 <div class="lesson-card w-full sm:w-[420px] rounded-2xl p-4 flex flex-col gap-4">
                     
                     <div class="relative overflow-hidden rounded-xl bg-black/50 aspect-video border border-purple-950/40 shadow-inner">
-                        <video controls 
-       controlsList="nodownload" 
-       oncontextmenu="return false;"
-       poster="{{ asset('storage/'.$l->image) }}" 
-       class="w-full h-full object-cover rounded-xl focus:outline-none">
-    <source src="{{ asset('storage/'.$l->video) }}">
-    Your browser does not support the video tag.
-      </video>
+    
                     </div>
 
                     <div class="flex items-start space-x-3 mt-1 px-1">
