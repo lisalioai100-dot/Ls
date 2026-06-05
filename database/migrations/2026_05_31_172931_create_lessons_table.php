@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->text('name',600);
+            $table->text('name',1000);
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });

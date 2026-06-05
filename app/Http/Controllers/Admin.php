@@ -50,7 +50,7 @@ class Admin extends Controller
     public function setLesson(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required','string' ,'min:5','max:600'],
+            'name' => ['required','string' ,'min:5','max:1000'],
             'image' => ['required','image','mimes:jpg,png,jpeg,gif','max:2048'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
         ]);
