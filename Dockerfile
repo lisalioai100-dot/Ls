@@ -1,41 +1,32 @@
-FROM php:8.2-apache
-
+FROM php:8.2-fpm
 
 RUN apt-get update && apt-get install -y \
+    build-essential \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    libsqlite3-dev \
+    libzip-dev \
+    locales \
     zip \
     unzip \
     git \
     curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql pdo_sqlite gd
+    && docker-php-ext-install pdo_mysql pdo_sqlite gd zip pcntl exif
 
-RUN a2enmod rewrite
-
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /var/www/html
-COPY . .
+WORKDIR /var/www
 
-RUN composer install --no-dev --optimize-autoloader
+RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www
 
-RUN chown -R www-data:www-data /var/www/html/storage \
-    /var/www/html/bootstrap/cache \
-    /var/www/html/database \
-    /var/www/html/public
+COPY --chown=www:www . /var/www
 
-EXPOSE 80
+USER www
 
+EXPOSE 9000
 
-CMD touch database/database.sqlite && \
-    php artisan config:clear && \
-    php artisan view:clear && \
-    php artisan storage:link && \
-    php artisan migrate --force && \
-    apache2-foreground
+CMD ["php-fpm"]
